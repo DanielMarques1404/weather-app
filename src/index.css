@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-primary: "Red Hat Text", sans-serif;
+
+  --font-weight-small: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+
+  --color-green: hsl(159, 69%, 38%);
+  --color-red: hsl(14, 86%, 42%);
+
+  --color-rose-50: hsl(20, 50%, 98%);
+  --color-rose-100: hsl(13, 31%, 94%);
+  --color-rose-300: hsl(14, 25%, 72%);
+  --color-rose-400: hsl(7, 20%, 60%);
+  --color-rose-500: hsl(12, 20%, 44%);
+  --color-rose-900: hsl(14, 65%, 9%);
+}
+
+
+* {
+  list-style: none;
+  font-family: var(--font-primary);
+}
+
+body {
+  @apply bg-rose-50;
+}
+
+h1 {
+  @apply text-4xl font-bold;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
