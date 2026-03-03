@@ -1,31 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --font-primary: "Red Hat Text", sans-serif;
+  --font-dmSans: "DM Sans", sans-serif;
+  --font-bricolageGrotesque: "Bricolage Grotesque", sans-serif;
 
-  --font-weight-small: 400;
-  --font-weight-medium: 600;
-  --font-weight-bold: 700;
+  /* --font-weight-300: 300;
+  --font-weight-500: 500;
+  --font-weight-600: 600;
+  --font-weight-600i: 600i;
+  --font-weight-700: 700; */
 
-  --color-green: hsl(159, 69%, 38%);
-  --color-red: hsl(14, 86%, 42%);
-
-  --color-rose-50: hsl(20, 50%, 98%);
-  --color-rose-100: hsl(13, 31%, 94%);
-  --color-rose-300: hsl(14, 25%, 72%);
-  --color-rose-400: hsl(7, 20%, 60%);
-  --color-rose-500: hsl(12, 20%, 44%);
-  --color-rose-900: hsl(14, 65%, 9%);
+  --color-Neutral-900: hsl(243, 96%, 9%);
+  --color-Neutral-800: hsl(243, 27%, 20%);
+  --color-Neutral-700: hsl(243, 23%, 24%);
+  --color-Neutral-600: hsl(243, 23%, 30%);
+  --color-Neutral-300: hsl(240, 6%, 70%);
+  --color-Neutral-200: hsl(250, 6%, 84%);
+  --color-Neutral-0: hsl(0, 0%, 100%);
+  --color-Orange-500: hsl(28, 100%, 52%);
+  --color-Blue-500: hsl(233, 67%, 56%);
+  --color-Blue-700: hsl(248, 70%, 36%);
 }
-
 
 * {
   list-style: none;
-  font-family: var(--font-primary);
 }
 
 body {
-  @apply bg-rose-50;
+  @apply bg-Neutral-900;
 }
 
 h1 {
