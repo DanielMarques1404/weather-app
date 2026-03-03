@@ -1,4 +1,5 @@
 import { cn } from "../libs/cn";
+import { dateOptions } from "../libs/utils";
 
 type TodayProps = {
   variant: "small" | "large";
@@ -19,6 +20,7 @@ export const Today = (props: TodayProps) => {
           { hidden: props.variant === "large" },
         )}
       />
+
       <img
         src="/assets/images/bg-today-large.svg"
         alt=""
@@ -27,11 +29,12 @@ export const Today = (props: TodayProps) => {
           { hidden: props.variant === "small" },
         )}
       />
+
       <div className="col-start-1 -col-end-1 row-start-1 -row-end-1 z-10 flex items-center justify-center">
         <div className="grid grid-rows-2 items-center justify-center">
           <div className="flex flex-col gap-2">
-            <span className="text-3xl font-semibold text-Neutral-200">{props.city}</span>
-            <span>{props.date.toLocaleDateString()}</span>
+            <span className="text-4xl font-semibold text-Neutral-200">{props.city}</span>
+            <span className="text-xl text-Neutral-300">{props.date.toLocaleDateString('en-us', dateOptions)}</span>
           </div>
           <div className="flex w-full items-center justify-between">
             <img className="w-32 h-32" src={props.weatherIcon} alt="" />
