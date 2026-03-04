@@ -4,8 +4,7 @@ import { fetchWeatherApi } from "openmeteo";
 // &daily=temperature_2m_max,temperature_2m_min,weather_code
 // &hourly=temperature_2m,weather_code
 // &current=relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,temperature_2m,weather_code
-// &timezone=auto  
-
+// &timezone=auto
 
 type openMeteoApiParams = {
   latitude: number;
@@ -13,6 +12,7 @@ type openMeteoApiParams = {
   hourly: string;
   daily: string;
   current: string;
+  forecast_days: number;
   timezone: string;
 };
 
@@ -28,6 +28,7 @@ export class OpenMeteoApi {
       daily: "temperature_2m_max,temperature_2m_min,weather_code",
       current:
         "relative_humidity_2m,apparent_temperature,precipitation,wind_speed_10m,temperature_2m,weather_code",
+      forecast_days: 14,
       timezone: "auto",
     };
   }

@@ -1,57 +1,83 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { DailyForecast } from "./components/DailyForecast";
 import { QuickInfo } from "./components/QuickInfo";
 import { Today } from "./components/Today";
 import { OpenMeteoApi } from "./libs/open-meteo-api";
 import { getOpenMeteoIconName } from "./libs/utils";
 
 function App() {
-  const [data, setData] = useState<any>(null);
+  const [currentData, setCurrentData] = useState<any>(null);
+  const [dailyData, setDailyData] = useState<any>(null);
+  const [hourlyData, setHourlyData] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const omApi = new OpenMeteoApi(-3.7172, -38.5431);
       await omApi.fetchWeather();
-      setData(omApi.getCurrentData());
+      setCurrentData(omApi.getCurrentData());
+      setDailyData(omApi.getDailyData());
+      setHourlyData(omApi.getHourlyData());
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
-  if (!data) {
+  if (!currentData || !dailyData || !hourlyData) {
     return <span className="text-lg text-Neutral-0">Loading...</span>;
   }
+  console.log({ currentData, dailyData, hourlyData });
+  dailyData.time.map((time: any) =>
+    console.log(time.toLocaleDateString("en-us", { weekday: "short" })),
+  );
 
   return (
-    <div className="m-auto w-80 space-y-2">
+    <div className="m-auto w-92 space-y-2">
       <Today
         variant={"small"}
-        temperature={Math.floor(data.temperature_2m)}
-        date={data.date}
+        temperature={Math.floor(currentData.temperature_2m)}
+        date={currentData.date}
         city={"Brazil, Fortaleza"}
-        weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(data.weather_code)}.webp`}
+        weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(currentData.weather_code)}.webp`}
       />
-      <section className="grid grid-cols-2 grid-rows-2 gap-2">
+      <section className="grid grid-cols-2 grid-rows-2 gap-4 mb-4">
         <QuickInfo
           label={"Feels like"}
-          info={`${Math.floor(data.apparent_temperature)}°`}
+          info={`${Math.floor(currentData.apparent_temperature)}°`}
         />
         <QuickInfo
           label={"Humidity"}
-          info={`${Math.floor(data.relative_humidity_2m)}%`}
+          info={`${Math.floor(currentData.relative_humidity_2m)}%`}
         />
         <QuickInfo
           label={"Wind"}
-          info={`${Math.floor(data.wind_speed_10m)} km/h`}
+          info={`${Math.floor(currentData.wind_speed_10m)} km/h`}
         />
         <QuickInfo
           label={"Precipitation"}
-          info={`${Math.floor(data.precipitation)} mm`}
+          info={`${Math.floor(currentData.precipitation)} mm`}
         />
+      </section>
+
+      <section >
+        <span className="flex items-center justify-start text-Neutral-0 font-dmSans my-2">Daily Forecast</span>
+        <ul className="grid grid-cols-3 gap-3">
+          {dailyData.time
+            .filter((time: any) => time >= currentData.date)
+            .slice(0, 7)
+            .map((time: any, idx: number) => (
+              <li key={idx}>
+                <DailyForecast
+                  weekday={time.toLocaleDateString("en-us", {
+                    weekday: "short",
+                  })}
+                  icon={`/assets/images/icon-${getOpenMeteoIconName(dailyData.weather_code[idx])}.webp`}
+                  minTemperature={Math.floor(dailyData.temperature_2m_min[idx])}
+                  maxTemperature={Math.floor(dailyData.temperature_2m_max[idx])}
+                />
+              </li>
+            ))}
+        </ul>
       </section>
     </div>
   );
