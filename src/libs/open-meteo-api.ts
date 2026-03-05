@@ -41,17 +41,18 @@ export class OpenMeteoApi {
 
   getHourlyData() {
     const hourly = this.data.hourly()!;
+    const yesterdayOffset = 3;
     const utcOffsetSeconds = this.data.utcOffsetSeconds();
     return {
       time: Array.from(
         {
           length:
-            (Number(hourly.timeEnd()) - Number(hourly.time())) /
-            hourly.interval(),
+            ((Number(hourly.timeEnd()) - Number(hourly.time())) /
+            hourly.interval()) - yesterdayOffset,
         },
         (_, i) =>
           new Date(
-            (Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) *
+            (Number(hourly.time()) + (i + yesterdayOffset) * hourly.interval() + utcOffsetSeconds) *
               1000,
           ),
       ),
@@ -74,17 +75,18 @@ export class OpenMeteoApi {
   }
 
   getDailyData() {
+    const yesterdayOffset = 1;
     const daily = this.data.daily()!;
     const utcOffsetSeconds = this.data.utcOffsetSeconds();
     return {
       time: Array.from(
         {
-          length:
-            (Number(daily.timeEnd()) - Number(daily.time())) / daily.interval(),
+          length: 7
+            //(Number(daily.timeEnd()) - Number(daily.time())) / daily.interval(),
         },
         (_, i) =>
           new Date(
-            (Number(daily.time()) + i * daily.interval() + utcOffsetSeconds) *
+            (Number(daily.time()) + (i + yesterdayOffset) * daily.interval() + utcOffsetSeconds) *
               1000,
           ),
       ),
