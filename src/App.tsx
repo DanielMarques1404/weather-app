@@ -5,11 +5,12 @@ import { QuickInfo } from "./components/QuickInfo";
 import { Today } from "./components/Today";
 import { OpenMeteoApi } from "./libs/open-meteo-api";
 import { getOpenMeteoIconName } from "./libs/utils";
+import type { CurrentData, DailyData, HourlyData } from "./types/types";
 
 function App() {
-  const [currentData, setCurrentData] = useState<any>(null);
-  const [dailyData, setDailyData] = useState<any>(null);
-  const [hourlyData, setHourlyData] = useState<any>(null);
+  const [currentData, setCurrentData] = useState<CurrentData | null>(null);
+  const [dailyData, setDailyData] = useState<DailyData | null>(null);
+  const [hourlyData, setHourlyData] = useState<HourlyData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,12 +28,10 @@ function App() {
     return <span className="text-lg text-Neutral-0">Loading...</span>;
   }
   console.log({ currentData, dailyData, hourlyData });
-  dailyData.time.map((time: any) =>
-    console.log(time.toLocaleDateString("en-us", { weekday: "short" })),
-  );
+
 
   return (
-    <div className="m-auto w-92 space-y-2">
+    <main className="flex flex-col gap-4 m-auto w-92">
       <Today
         variant={"small"}
         temperature={Math.floor(currentData.temperature_2m)}
@@ -40,7 +39,8 @@ function App() {
         city={"Brazil, Fortaleza"}
         weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(currentData.weather_code)}.webp`}
       />
-      <section className="grid grid-cols-2 grid-rows-2 gap-4 mb-4">
+
+      <section className="grid grid-cols-2 grid-rows-2 gap-4">
         <QuickInfo
           label={"Feels like"}
           info={`${Math.floor(currentData.apparent_temperature)}°`}
@@ -63,9 +63,9 @@ function App() {
         <span className="flex items-center justify-start text-Neutral-0 font-dmSans my-2">Daily Forecast</span>
         <ul className="grid grid-cols-3 gap-3">
           {dailyData.time
-            .filter((time: any) => time >= currentData.date)
+            .filter(time => time >= currentData.date)
             .slice(0, 7)
-            .map((time: any, idx: number) => (
+            .map((time, idx) => (
               <li key={idx}>
                 <DailyForecast
                   weekday={time.toLocaleDateString("en-us", {
@@ -79,7 +79,9 @@ function App() {
             ))}
         </ul>
       </section>
-    </div>
+
+      {/* <section><HourlyForecast hourlyData={hourlyData.hourly} /></section> */}
+    </main>
   );
 }
 

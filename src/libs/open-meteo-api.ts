@@ -43,24 +43,20 @@ export class OpenMeteoApi {
     const hourly = this.data.hourly()!;
     const utcOffsetSeconds = this.data.utcOffsetSeconds();
     return {
-      hourly: {
-        time: Array.from(
-          {
-            length:
-              (Number(hourly.timeEnd()) - Number(hourly.time())) /
-              hourly.interval(),
-          },
-          (_, i) =>
-            new Date(
-              (Number(hourly.time()) +
-                i * hourly.interval() +
-                utcOffsetSeconds) *
-                1000,
-            ),
-        ),
-        temperature_2m: hourly.variables(0)!.valuesArray(),
-        weather_code: hourly.variables(1)!.valuesArray(),
-      },
+      time: Array.from(
+        {
+          length:
+            (Number(hourly.timeEnd()) - Number(hourly.time())) /
+            hourly.interval(),
+        },
+        (_, i) =>
+          new Date(
+            (Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) *
+              1000,
+          ),
+      ),
+      temperature_2m: hourly.variables(0)!.valuesArray(),
+      weather_code: hourly.variables(1)!.valuesArray(),
     };
   }
 
