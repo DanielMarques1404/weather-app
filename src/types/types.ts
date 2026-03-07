@@ -16,7 +16,12 @@ export type DailyData = {
 }
 
 export type HourlyData = {
-    time: Date[];
-    temperature_2m: number[];
-    weather_code: number[];
+    time: Date[][];
+    temperature_2m: number[][];
+    weather_code: number[][];
+}
+
+export type WeekDay = {
+    value: number;
+    label: string;
 }

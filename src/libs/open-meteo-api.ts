@@ -1,4 +1,5 @@
 import { fetchWeatherApi } from "openmeteo";
+import type { CurrentData, DailyData, HourlyData } from "../types/types";
 
 // https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41
 // &daily=temperature_2m_max,temperature_2m_min,weather_code
@@ -39,29 +40,33 @@ export class OpenMeteoApi {
     this.data = responses[0];
   }
 
-  getHourlyData() {
+  getHourlyData(): HourlyData {
     const hourly = this.data.hourly()!;
     const yesterdayOffset = 3;
     const utcOffsetSeconds = this.data.utcOffsetSeconds();
     return {
-      time: Array.from(
-        {
-          length:
-            ((Number(hourly.timeEnd()) - Number(hourly.time())) /
-            hourly.interval()) - yesterdayOffset,
-        },
-        (_, i) =>
-          new Date(
-            (Number(hourly.time()) + (i + yesterdayOffset) * hourly.interval() + utcOffsetSeconds) *
-              1000,
-          ),
+      time: Array.from({ length: 7 }, (_, i) =>
+        Array.from(
+          { length: 24 },
+          (_, j) =>
+            new Date(
+              (Number(hourly.time()) +
+                (24 * i + j + yesterdayOffset) * hourly.interval() +
+                utcOffsetSeconds) *
+                1000,
+            ),
+        ),
       ),
-      temperature_2m: hourly.variables(0)!.valuesArray(),
-      weather_code: hourly.variables(1)!.valuesArray(),
+      temperature_2m: Array.from({ length: 7 }, (_, i) =>
+            [...hourly.variables(0)!.valuesArray().slice((i*24) + yesterdayOffset,(i*24) + 24 + yesterdayOffset)],
+      ),
+      weather_code: Array.from({ length: 7 }, (_, i) => 
+          [...hourly.variables(1)!.valuesArray().slice((i*24) + yesterdayOffset,(i*24) + 24 + yesterdayOffset)],
+      ),
     };
   }
 
-  getCurrentData() {
+  getCurrentData(): CurrentData {
     const current = this.data.current()!;
     return {
       relative_humidity_2m: current.variables(0)!.value(),
@@ -74,19 +79,20 @@ export class OpenMeteoApi {
     };
   }
 
-  getDailyData() {
+  getDailyData(): DailyData {
     const yesterdayOffset = 1;
     const daily = this.data.daily()!;
     const utcOffsetSeconds = this.data.utcOffsetSeconds();
     return {
       time: Array.from(
         {
-          length: 7
-            //(Number(daily.timeEnd()) - Number(daily.time())) / daily.interval(),
+          length: 7,
         },
         (_, i) =>
           new Date(
-            (Number(daily.time()) + (i + yesterdayOffset) * daily.interval() + utcOffsetSeconds) *
+            (Number(daily.time()) +
+              (i + yesterdayOffset) * daily.interval() +
+              utcOffsetSeconds) *
               1000,
           ),
       ),

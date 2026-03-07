@@ -6,6 +6,7 @@ import { Today } from "./components/Today";
 import { OpenMeteoApi } from "./libs/open-meteo-api";
 import { getOpenMeteoIconName } from "./libs/utils";
 import type { CurrentData, DailyData, HourlyData } from "./types/types";
+import { HourlyForecast } from "./components/HourlyForecast";
 
 function App() {
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
@@ -31,7 +32,7 @@ function App() {
 
 
   return (
-    <main className="flex flex-col gap-4 m-auto w-92">
+    <main className="flex flex-col gap-4 w-92 m-auto">
       <Today
         variant={"small"}
         temperature={Math.floor(currentData.temperature_2m)}
@@ -60,11 +61,9 @@ function App() {
       </section>
 
       <section >
-        <span className="flex items-center justify-start text-Neutral-0 font-dmSans my-2">Daily Forecast</span>
+        <span className="flex items-center justify-start text-Neutral-0 font-dmSans font-bold my-2">Daily Forecast</span>
         <ul className="grid grid-cols-3 gap-3">
           {dailyData.time
-            .filter(time => time >= currentData.date)
-            .slice(0, 7)
             .map((time, idx) => (
               <li key={idx}>
                 <DailyForecast
@@ -80,7 +79,7 @@ function App() {
         </ul>
       </section>
 
-      {/* <section><HourlyForecast hourlyData={hourlyData.hourly} /></section> */}
+      <section><HourlyForecast hourly={hourlyData} /></section>
     </main>
   );
 }

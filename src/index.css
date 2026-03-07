@@ -20,6 +20,34 @@
   --color-Orange-500: hsl(28, 100%, 52%);
   --color-Blue-500: hsl(233, 67%, 56%);
   --color-Blue-700: hsl(248, 70%, 36%);
+
+  --scrollbar-width: 40px;
+  --scrollbar-thumb-color: hsl(243, 23%, 30%);
+  --scrollbar-track-color: hsl(243, 27%, 20%);
+}
+
+/* Aqui vêm as regras que USAM as variáveis */
+.scrollbar-custom {
+  scrollbar-width: thin; /* Firefox: thin, auto, none */
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: var(--scrollbar-width); /* Chrome: controla a largura */
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: hsl(240, 6%, 70%);
 }
 
 * {
