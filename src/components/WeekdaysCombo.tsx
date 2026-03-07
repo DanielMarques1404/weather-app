@@ -1,34 +1,40 @@
 import { useEffect, useState } from "react";
 import type { WeekDay } from "../types/types";
 
-type WeekdaysComboProps = {
-  onchange: (weekdays: string) => void;
-};
-
-type WeekdaysItemProps = {
+type WeekdayItemProps = {
   weekday: WeekDay;
-  onclick: () => void;
+  onclick: (index: number) => void;
 };
 
-export const WeekdaySelected = (props: WeekdaysItemProps) => {
-  const [selected, setSelected] = useState(props.weekday);
+type WeekdaySelectedProps = {
+    label: string;
+    onclick: () => void;
+}
+
+type WeekdaysListProps = {
+    indexList: number[];
+    onclick: (weekDayIndex: number) => void;
+}
+
+export const WeekdaySelected = ({label, onclick}: WeekdaySelectedProps) => {
+  const [selected, setSelected] = useState(label);
 
   useEffect(() => {
-    setSelected(props.weekday);
-  }, [props.weekday]);
+    setSelected(label);
+  }, [label]);
 
   return (
     <button
       className="flex items-center justify-center gap-2 bg-Neutral-600 font-dmSans text-sm text-Neutral-0 p-2 w-full cursor-pointer rounded-xl"
-      onClick={props.onclick}
+      onClick={onclick}
     >
-      {selected.label}
+      {selected}
       <img src="/assets/images/icon-dropdown.svg" alt="Dropdown button" />
     </button>
   );
 };
 
-export const WeekdayItem = (props: WeekdaysItemProps) => {
+export const WeekdayItem = (props: WeekdayItemProps) => {
   const [selected, setSelected] = useState(props.weekday);
 
   useEffect(() => {
@@ -38,94 +44,29 @@ export const WeekdayItem = (props: WeekdaysItemProps) => {
   return (
     <button
       className="flex items-center justify-start gap-2 bg-Neutral-800 hover:bg-Neutral-600 font-dmSans text-sm text-Neutral-0 p-2 w-full cursor-pointer rounded-xl"
-      onClick={props.onclick}
+      onClick={() => props.onclick(selected.value)}
     >
       {selected.label}
     </button>
   );
 };
 
-export const WeekdaysList = () => {
+export const WeekdaysList = ({ indexList, onclick }: WeekdaysListProps) => {
   const completeList: WeekDay[] = [
-    { value: 0, label: "Monday" },
-    { value: 1, label: "Tuesday" },
-    { value: 2, label: "Wednesday" },
-    { value: 3, label: "Thursday" },
-    { value: 4, label: "Friday" },
-    { value: 5, label: "Saturday" },
-    { value: 6, label: "Sunday" },
+    { value: indexList[0], label: "Monday" },
+    { value: indexList[1], label: "Tuesday" },
+    { value: indexList[2], label: "Wednesday" },
+    { value: indexList[3], label: "Thursday" },
+    { value: indexList[4], label: "Friday" },
+    { value: indexList[5], label: "Saturday" },
+    { value: indexList[6], label: "Sunday" },
   ];
 
   return (
     <div className="flex flex-col gap-2 border border-neutral-700 rounded-xl p-2 bg-Neutral-800 w-64">
         {completeList.map((weekday) => (
-          <WeekdayItem key={weekday.value} weekday={weekday} onclick={() => console.log(weekday.label)} />
+          <WeekdayItem key={weekday.value} weekday={weekday} onclick={() => onclick(weekday.value)} />
         ))}
     </div>
-  );
-};
-
-export const WeekdaysCombo = (props: WeekdaysComboProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  //   const [selectedWeekday, setSelectedWeekday] = useState(0);
-  const completeList: WeekDay[] = [
-    { value: 0, label: "Monday" },
-    { value: 1, label: "Tuesday" },
-    { value: 2, label: "Wednesday" },
-    { value: 3, label: "Thursday" },
-    { value: 4, label: "Friday" },
-    { value: 5, label: "Saturday" },
-    { value: 6, label: "Sunday" },
-  ];
-  const [weekdays, setWeekdays] = useState<WeekDay[]>([completeList[0]]);
-
-  //   const weekdays: Record<number, string> = {
-  //     0: "Monday",
-  //     1: "Tuesday",
-  //     2: "Wednesday",
-  //     3: "Thursday",
-  //     4: "Friday",
-  //     5: "Saturday",
-  //     6: "Sunday",
-  //   };
-
-  //   const handleWeekdayChange = (weekdays: string) => {
-  //     const selectedKey = Object.keys(weekdays).find(
-  //       (key) => weekdays[Number(key)] === weekdays
-  //     );
-  //     setSelectedWeekday(Number(selectedKey));
-  //     props.onchange(weekdays);
-  //     setIsOpen(false);
-  // }
-
-  //   if (!isOpen) {
-  //     return (
-  //         <div>
-  //             <button onClick={() => setIsOpen(true)}>
-  //                 {weekdays[selectedWeekday]}
-  //             </button>
-  //         </div>
-  //     );
-  //   }
-
-  return (
-    <ul>
-      {Object.entries(weekdays).map(([key, value]) => (
-        <li key={key}>
-          <WeekdaySelected weekday={value} onclick={() => console.log(value)} />
-        </li>
-      ))}
-    </ul>
-    // <div
-    //   id="weekdays"
-    // >
-    //   <option value="Mon">Monday</option>
-    //   <option value="Tue">Tuesday</option>
-    //   <option value="Wed">Wednesday</option>
-    //   <option value="Thu">Thursday</option>
-    //   <option value="Fri">Friday</option>
-    //   <option value="Sat">Saturday</option>
-    //   <option value="Sun">Sunday</option>
-    // </div>
   );
 };
