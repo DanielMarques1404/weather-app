@@ -1,20 +1,99 @@
-export const SearchInput = () => {
-  return (
-    <div className="flex items-center justify-between gap-2 bg-Neutral-700 border border-Neutral-600 rounded-lg w-full p-4 select-none">
-      <img src="/assets/images/icon-search.svg" alt="Search Icon" />
-      <input
-        className="flex-1 text-Neutral-200 outline-none bg-transparent"
-        type="text"
-        placeholder="Search for a place..."
-      />
-    </div>
-  );
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
+import { axios } from "../libs/axios";
+import type { City } from "../types/types";
+
+type SearchInputProps = {
+  search: (city: City) => void;
 };
 
-export const SearchButton = () => {
+export const SearchInput = ({ search }: SearchInputProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [chosenCity, setChosenCity] = useState<City | null>(null);
+  const [showList, setShowList] = useState(false);
+  const [debouncedSearch] = useDebounce(searchTerm, 500);
+
+  const { data, isPending } = useQuery({
+    queryKey: ["citiesData", debouncedSearch],
+    queryFn: () =>
+      axios(
+        `search?name=${debouncedSearch}&count=10&language=en&format=json`,
+      ).then((res) => res.data),
+    enabled: debouncedSearch.length > 2,
+  });
+
+  const handleListClick = (city: City) => {
+    setChosenCity(city);
+    setShowList(false);
+    setSearchTerm(city.name);
+  };
+
   return (
-    <button className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 border rounded-lg w-full p-4">
-      <span className="flex text-xl text-Neutral-200 font-semibold items-center justify-center w-full">Search</span>
-    </button>
+    <div className="relative flex flex-col gap-2 items-center justify-center">
+      <div className="flex items-center justify-between gap-2 bg-Neutral-700 border border-Neutral-600 rounded-lg w-full p-4 select-none">
+        <img src="/assets/images/icon-search.svg" alt="Search Icon" />
+        <input
+          className="flex-1 text-Neutral-200 outline-none bg-transparent"
+          value={searchTerm}
+          type="text"
+          placeholder="Search for a place..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={() => setShowList(true)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              setShowList(false);
+            }
+          }}
+        />
+      </div>
+
+      {showList && searchTerm.length > 2 && (
+        <>
+          {isPending ? (
+            <div className="absolute top-15 z-99 flex items-center justify-center gap-2 w-full bg-Neutral-700 border border-Neutral-300 text-Neutral-0 rounded-lg p-2 h-16">
+              <img src="/assets/images/icon-loading.svg" alt="" />
+              <span className="text-Neutral-200">Search in progress</span>
+            </div>
+          ) : (
+            data.results && (
+              <div className="absolute top-15 z-99 w-full overflow-y-auto scrollbar-custom bg-Neutral-700 border border-Neutral-300 text-Neutral-0 rounded-lg p-2 h-48">
+                <ul className="space-y-2 mr-2">
+                  {data.results.map((city: City) => (
+                    <li
+                      key={`city-${city.id}`}
+                      className="cursor-pointer hover:bg-Neutral-600"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        console.log("onMouseDown triggered for", city);
+                        handleListClick(city);
+                      }}
+                    >{`${city.name}, ${city.admin1}, ${city.country}`}</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          )}
+
+          {/* {data?.results.length > 0 && (
+            <div className="absolute top-15 z-99 w-full overflow-y-auto scrollbar-custom bg-Neutral-700 border border-Neutral-300 text-Neutral-0 rounded-lg p-2 h-32">
+              <ul className="space-y-2 mr-2">
+                {data.results.map((city: any, idx: number) => (
+                  <li key={`city-${idx}`}>{`${city.name}, ${city.admin1}, ${city.country}`}</li>
+                ))}
+              </ul>
+            </div>
+          )} */}
+        </>
+      )}
+      <button
+        className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 border rounded-lg w-full p-4 cursor-pointer"
+        onClick={() => chosenCity && search(chosenCity)}
+      >
+        <span className="flex text-xl text-Neutral-200 font-semibold items-center justify-center w-full">
+          Search
+        </span>
+      </button>
+    </div>
   );
 };
