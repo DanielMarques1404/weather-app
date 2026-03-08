@@ -24,14 +24,14 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
           <span className="font-dmSans text-md text-start font-bold text-Neutral-0 w-3/5">
             Hourly Forecast
           </span>
-          <button className="w-2/5">
+          <div className="w-2/5">
             <WeekdaySelected
               label={hourly.time[day][0].toLocaleString("en-US", {
                 weekday: "long",
               })}
               onclick={() => setShowListWeekdays(true)}
             />
-          </button>
+          </div>
         </div>
         <div className="w-full overflow-y-auto scrollbar-custom">
           <ul className="space-y-2 mr-2">

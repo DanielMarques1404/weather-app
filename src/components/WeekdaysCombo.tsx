@@ -24,13 +24,13 @@ export const WeekdaySelected = ({label, onclick}: WeekdaySelectedProps) => {
   }, [label]);
 
   return (
-    <button
+    <div
       className="flex items-center justify-center gap-2 bg-Neutral-600 font-dmSans text-sm text-Neutral-0 p-2 w-full cursor-pointer rounded-xl"
       onClick={onclick}
     >
       {selected}
       <img src="/assets/images/icon-dropdown.svg" alt="Dropdown button" />
-    </button>
+    </div>
   );
 };
 
@@ -42,12 +42,12 @@ export const WeekdayItem = (props: WeekdayItemProps) => {
   }, [props.weekday]);
 
   return (
-    <button
+    <div
       className="flex items-center justify-start gap-2 bg-Neutral-800 hover:bg-Neutral-600 font-dmSans text-sm text-Neutral-0 p-2 w-full cursor-pointer rounded-xl"
       onClick={() => props.onclick(selected.value)}
     >
       {selected.label}
-    </button>
+    </div>
   );
 };
 

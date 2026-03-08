@@ -36,7 +36,7 @@ function App() {
 
       <section className="flex items-center justify-between p-1">
         <img src="/assets/images/logo.svg" alt="" />
-        <button className="text-Neutral-0">Units</button>
+        <div className="text-Neutral-0">Units</div>
       </section>
 
       <h1 className="font-bricolageGrotesque text-Neutral-0">
