@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { DailyForecast } from "./components/DailyForecast";
+import { HourlyForecast } from "./components/HourlyForecast";
 import { QuickInfo } from "./components/QuickInfo";
+import { SearchButton, SearchInput } from "./components/Search";
 import { Today } from "./components/Today";
 import { OpenMeteoApi } from "./libs/open-meteo-api";
 import { getOpenMeteoIconName } from "./libs/utils";
 import type { CurrentData, DailyData, HourlyData } from "./types/types";
-import { HourlyForecast } from "./components/HourlyForecast";
 
 function App() {
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
@@ -30,16 +31,32 @@ function App() {
   }
   console.log({ currentData, dailyData, hourlyData });
 
-
   return (
-    <main className="flex flex-col gap-4 w-92 m-auto">
-      <Today
-        variant={"small"}
-        temperature={Math.floor(currentData.temperature_2m)}
-        date={currentData.date}
-        city={"Brazil, Fortaleza"}
-        weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(currentData.weather_code)}.webp`}
-      />
+    <main className="flex flex-col gap-4 w-88 m-auto">
+
+      <section className="flex items-center justify-between p-1">
+        <img src="/assets/images/logo.svg" alt="" />
+        <button className="text-Neutral-0">Units</button>
+      </section>
+
+      <h1 className="font-bricolageGrotesque text-Neutral-0">
+        How's the sky looking today?
+      </h1>
+
+      <section className="my-2 space-y-2">
+        <SearchInput />
+        <SearchButton />
+      </section>
+
+      <section>
+        <Today
+          variant={"small"}
+          temperature={Math.floor(currentData.temperature_2m)}
+          date={currentData.date}
+          city={"Brazil, Fortaleza"}
+          weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(currentData.weather_code)}.webp`}
+        />
+      </section>
 
       <section className="grid grid-cols-2 grid-rows-2 gap-4">
         <QuickInfo
@@ -60,26 +77,29 @@ function App() {
         />
       </section>
 
-      <section >
-        <span className="flex items-center justify-start text-Neutral-0 font-dmSans font-bold my-2">Daily Forecast</span>
+      <section>
+        <span className="flex items-center justify-start text-Neutral-0 font-dmSans font-bold my-2">
+          Daily Forecast
+        </span>
         <ul className="grid grid-cols-3 gap-3">
-          {dailyData.time
-            .map((time, idx) => (
-              <li key={idx}>
-                <DailyForecast
-                  weekday={time.toLocaleDateString("en-us", {
-                    weekday: "short",
-                  })}
-                  icon={`/assets/images/icon-${getOpenMeteoIconName(dailyData.weather_code[idx])}.webp`}
-                  minTemperature={Math.floor(dailyData.temperature_2m_min[idx])}
-                  maxTemperature={Math.floor(dailyData.temperature_2m_max[idx])}
-                />
-              </li>
-            ))}
+          {dailyData.time.map((time, idx) => (
+            <li key={idx}>
+              <DailyForecast
+                weekday={time.toLocaleDateString("en-us", {
+                  weekday: "short",
+                })}
+                icon={`/assets/images/icon-${getOpenMeteoIconName(dailyData.weather_code[idx])}.webp`}
+                minTemperature={Math.floor(dailyData.temperature_2m_min[idx])}
+                maxTemperature={Math.floor(dailyData.temperature_2m_max[idx])}
+              />
+            </li>
+          ))}
         </ul>
       </section>
 
-      <section><HourlyForecast hourly={hourlyData} /></section>
+      <section>
+        <HourlyForecast hourly={hourlyData} />
+      </section>
     </main>
   );
 }
