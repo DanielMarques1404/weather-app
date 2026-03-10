@@ -52,7 +52,7 @@ export const SearchInput = ({ search }: SearchInputProps) => {
         <>
           {isPending ? (
             <div className="absolute top-15 z-99 flex items-center justify-center gap-2 w-full bg-Neutral-700 border border-Neutral-300 text-Neutral-0 rounded-lg p-2 h-16">
-              <img src="/assets/images/icon-loading.svg" alt="" />
+              <img src="/assets/images/icon-loading.svg" alt="Icon loading search" />
               <span className="text-Neutral-200">Search in progress</span>
             </div>
           ) : (
@@ -74,16 +74,6 @@ export const SearchInput = ({ search }: SearchInputProps) => {
               </div>
             )
           )}
-
-          {/* {data?.results.length > 0 && (
-            <div className="absolute top-15 z-99 w-full overflow-y-auto scrollbar-custom bg-Neutral-700 border border-Neutral-300 text-Neutral-0 rounded-lg p-2 h-32">
-              <ul className="space-y-2 mr-2">
-                {data.results.map((city: any, idx: number) => (
-                  <li key={`city-${idx}`}>{`${city.name}, ${city.admin1}, ${city.country}`}</li>
-                ))}
-              </ul>
-            </div>
-          )} */}
         </>
       )}
       <button

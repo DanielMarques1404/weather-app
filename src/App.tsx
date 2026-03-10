@@ -32,7 +32,7 @@ function App() {
   return (
     <main className="flex flex-col gap-4 w-88 m-auto">
       <section className="flex items-center justify-between p-1">
-        <img src="/assets/images/logo.svg" alt="" />
+        <img src="/assets/images/logo.svg" alt="Logo Weather App" />
         <div className="text-Neutral-0">Units</div>
       </section>
 

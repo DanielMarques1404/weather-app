@@ -4,12 +4,6 @@
   --font-dmSans: "DM Sans", sans-serif;
   --font-bricolageGrotesque: "Bricolage Grotesque", sans-serif;
 
-  /* --font-weight-300: 300;
-  --font-weight-500: 500;
-  --font-weight-600: 600;
-  --font-weight-600i: 600i;
-  --font-weight-700: 700; */
-
   --color-Neutral-900: hsl(243, 96%, 9%);
   --color-Neutral-800: hsl(243, 27%, 20%);
   --color-Neutral-700: hsl(243, 23%, 24%);
@@ -26,14 +20,13 @@
   --scrollbar-track-color: hsl(243, 27%, 20%);
 }
 
-/* Aqui vêm as regras que USAM as variáveis */
 .scrollbar-custom {
-  scrollbar-width: thin; /* Firefox: thin, auto, none */
+  scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
 
 .scrollbar-custom::-webkit-scrollbar {
-  width: var(--scrollbar-width); /* Chrome: controla a largura */
+  width: var(--scrollbar-width);
 }
 
 .scrollbar-custom::-webkit-scrollbar-track {

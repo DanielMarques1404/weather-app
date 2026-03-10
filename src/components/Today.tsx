@@ -14,7 +14,7 @@ export const Today = (props: TodayProps) => {
     <div className="relative grid font-dmSans rounded-2xl overflow-hidden">
       <img
         src="/assets/images/bg-today-small.svg"
-        alt=""
+        alt="Today image"
         className={cn(
           "col-start-1 -col-end-1 row-start-1 -row-end-1 object-cover w-full h-full z-0",
           { hidden: props.variant === "large" },
@@ -23,7 +23,7 @@ export const Today = (props: TodayProps) => {
 
       <img
         src="/assets/images/bg-today-large.svg"
-        alt=""
+        alt="Today image"
         className={cn(
           "col-start-1 -col-end-1 row-start-1 -row-end-1 object-cover w-full h-full z-0",
           { hidden: props.variant === "small" },
@@ -37,7 +37,7 @@ export const Today = (props: TodayProps) => {
             <span className="text-xl text-Neutral-300">{props.date.toLocaleDateString('en-us', dateOptions)}</span>
           </div>
           <div className="flex w-full items-center justify-between">
-            <img className="w-28 h-28" src={props.weatherIcon} alt="" />
+            <img className="w-28 h-28" src={props.weatherIcon} alt="Icon weather" />
             <span className="text-8xl font-bold italic text-Neutral-0">{props.temperature}°</span>
           </div>
         </div>
