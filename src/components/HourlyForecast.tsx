@@ -29,7 +29,7 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
               label={hourly.time[day][0].toLocaleString("en-US", {
                 weekday: "long",
               })}
-              onclick={() => setShowListWeekdays(true)}
+              onclick={() => setShowListWeekdays(!showListWeekdays)}
             />
           </div>
         </div>

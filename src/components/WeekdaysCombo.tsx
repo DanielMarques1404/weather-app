@@ -63,7 +63,7 @@ export const WeekdaysList = ({ indexList, onclick }: WeekdaysListProps) => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 border border-neutral-700 rounded-xl p-2 bg-Neutral-800 w-64">
+    <div className="flex flex-col gap-2 border border-Neutral-600 rounded-xl p-2 bg-Neutral-800 w-64">
         {completeList.map((weekday) => (
           <WeekdayItem key={weekday.value} weekday={weekday} onclick={() => onclick(weekday.value)} />
         ))}
