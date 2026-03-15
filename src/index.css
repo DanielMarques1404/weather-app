@@ -58,3 +58,8 @@ h1 {
 h2 {
   @apply text-2xl font-bold;
 }
+
+button:focus {
+  outline: 3px solid var(--color-Blue-500);
+  outline-offset: 2px;
+}
