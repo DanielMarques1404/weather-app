@@ -36,7 +36,7 @@ export const Today = (props: TodayProps) => {
             <span className="text-4xl font-semibold text-Neutral-200">{props.city}</span>
             <span className="text-xl text-Neutral-300">{props.date.toLocaleDateString('en-us', dateOptions)}</span>
           </div>
-          <div className="flex w-full items-center justify-between">
+          <div className="flex gap-8 w-full items-center justify-center">
             <img className="w-28 h-28" src={props.weatherIcon} alt="Icon weather" />
             <span className="text-8xl font-bold italic text-Neutral-0">{props.temperature}°</span>
           </div>

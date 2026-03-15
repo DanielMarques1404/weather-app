@@ -1,5 +1,6 @@
 import { fetchWeatherApi } from "openmeteo";
-import type { CurrentData, DailyData, HourlyData } from "../types/types";
+import type { CurrentData, DailyData, HourlyData, Unit } from "../types/types";
+import { ImperialUnit } from "./utils";
 
 // https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41
 // &daily=temperature_2m_max,temperature_2m_min,weather_code
@@ -15,14 +16,17 @@ type openMeteoApiParams = {
   current: string;
   forecast_days: number;
   timezone: string;
+  temperature_unit?: string;
+  wind_speed_unit?: string;
+  precipitation_unit?: string;
 };
 
 export class OpenMeteoApi {
   private params: openMeteoApiParams;
   private data: any;
 
-  constructor(latitude: number, longitude: number) {
-    this.params = {
+  constructor(latitude: number, longitude: number, unit: Unit) {
+    const params: openMeteoApiParams = {
       latitude: latitude,
       longitude: longitude,
       hourly: "temperature_2m,weather_code",
@@ -32,8 +36,18 @@ export class OpenMeteoApi {
       forecast_days: 14,
       timezone: "auto",
     };
-  }
 
+    if (unit === ImperialUnit) {
+      Object.assign(params, {
+        temperature_unit: "fahrenheit",
+        wind_speed_unit: "mph",
+        precipitation_unit: "inch",
+      });
+    }
+
+    this.params = params;
+  }
+  // temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch
   async fetchWeather() {
     const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, this.params);
@@ -57,12 +71,18 @@ export class OpenMeteoApi {
             ),
         ),
       ),
-      temperature_2m: Array.from({ length: 7 }, (_, i) =>
-            [...hourly.variables(0)!.valuesArray().slice((i*24) + yesterdayOffset,(i*24) + 24 + yesterdayOffset)],
-      ),
-      weather_code: Array.from({ length: 7 }, (_, i) => 
-          [...hourly.variables(1)!.valuesArray().slice((i*24) + yesterdayOffset,(i*24) + 24 + yesterdayOffset)],
-      ),
+      temperature_2m: Array.from({ length: 7 }, (_, i) => [
+        ...hourly
+          .variables(0)!
+          .valuesArray()
+          .slice(i * 24 + yesterdayOffset, i * 24 + 24 + yesterdayOffset),
+      ]),
+      weather_code: Array.from({ length: 7 }, (_, i) => [
+        ...hourly
+          .variables(1)!
+          .valuesArray()
+          .slice(i * 24 + yesterdayOffset, i * 24 + 24 + yesterdayOffset),
+      ]),
     };
   }
 

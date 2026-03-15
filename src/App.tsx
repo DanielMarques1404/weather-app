@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { useUnitContext } from "./app/hooks/useUnitContext";
+import { UnitButton } from "./components/Config";
 import { DailyForecast } from "./components/DailyForecast";
 import { HourlyForecast } from "./components/HourlyForecast";
 import { QuickInfo } from "./components/QuickInfo";
@@ -14,12 +16,12 @@ function App() {
   const [dailyData, setDailyData] = useState<DailyData | null>(null);
   const [hourlyData, setHourlyData] = useState<HourlyData | null>(null);
   const [city, setCity] = useState<City | null>(null);
+  const { unit } = useUnitContext();
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("chegando no fetch", city);
       if (!city) return;
-      const omApi = new OpenMeteoApi(city.latitude, city.longitude);
+      const omApi = new OpenMeteoApi(city.latitude, city.longitude, unit);
       await omApi.fetchWeather();
       setCurrentData(omApi.getCurrentData());
       setDailyData(omApi.getDailyData());
@@ -27,16 +29,20 @@ function App() {
     };
 
     fetchData();
-  }, [city]);
+  }, [city, unit]);
 
   return (
     <main className="flex flex-col gap-4 w-88 m-auto">
-      <section className="flex items-center justify-between p-1">
-        <img src="/assets/images/logo.svg" alt="Logo Weather App" />
-        <div className="text-Neutral-0">Units</div>
+      <section className="flex w-full items-center justify-between p-1">
+        <img
+          className="w-36"
+          src="/assets/images/logo.svg"
+          alt="Logo Weather App"
+        />
+        <UnitButton />
       </section>
 
-      <h1 className="font-bricolageGrotesque text-Neutral-0">
+      <h1 className="font-bricolageGrotesque text-Neutral-0 my-4 p-2">
         How's the sky looking today?
       </h1>
 
@@ -67,11 +73,11 @@ function App() {
             />
             <QuickInfo
               label={"Wind"}
-              info={`${Math.floor(currentData.wind_speed_10m)} km/h`}
+              info={`${Math.floor(currentData.wind_speed_10m)} ${unit.windSpeed}`}
             />
             <QuickInfo
               label={"Precipitation"}
-              info={`${Math.floor(currentData.precipitation)} mm`}
+              info={`${Math.floor(currentData.precipitation)} ${unit.precipitation_short}`}
             />
           </section>
 

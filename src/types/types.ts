@@ -34,3 +34,10 @@ export type City = {
   longitude: number;
   latitude: number;
 };
+
+export type Unit = {
+  temperature: "Celsius (ºC)" | "Fahrenheit (ºF)";
+  windSpeed: "km/h" | "mph";
+  precipitation: "Millimeters (mm)" | "Inches (in)";
+  precipitation_short: "mm" | "in"
+};

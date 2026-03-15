@@ -65,7 +65,6 @@ export const SearchInput = ({ search }: SearchInputProps) => {
                       className="cursor-pointer hover:bg-Neutral-600"
                       onMouseDown={(e) => {
                         e.preventDefault();
-                        console.log("onMouseDown triggered for", city);
                         handleListClick(city);
                       }}
                     >{`${city.name}, ${city.admin1}, ${city.country}`}</li>

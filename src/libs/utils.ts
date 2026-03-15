@@ -1,3 +1,5 @@
+import type { Unit } from "../types/types";
+
 export const dateOptions: Intl.DateTimeFormatOptions = { 
     weekday: 'long',
     year: 'numeric', 
@@ -53,4 +55,18 @@ export const openMeteoIconByCode: Record<number, string> = {
   95: "storm",
   96: "storm",
   99: "storm",
+};
+
+export const ImperialUnit: Unit = {
+  temperature: "Fahrenheit (ºF)",
+  windSpeed: "mph",
+  precipitation: "Inches (in)",
+  precipitation_short: "in"
+};
+
+export const MetricsUnit: Unit = {
+  temperature: "Celsius (ºC)",
+  windSpeed: "km/h",
+  precipitation: "Millimeters (mm)",
+  precipitation_short: "mm"
 };
