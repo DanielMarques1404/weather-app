@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { useUnitContext } from "./app/hooks/useUnitContext";
-import { UnitButton } from "./components/Config";
 import { DailyForecast } from "./components/DailyForecast";
 import { HourlyForecast } from "./components/HourlyForecast";
 import { QuickInfo } from "./components/QuickInfo";
-import { SearchInput } from "./components/Search";
 import { Today } from "./components/Today";
 import { OpenMeteoApi } from "./libs/open-meteo-api";
 import { getOpenMeteoIconName } from "./libs/utils";
 import type { City, CurrentData, DailyData, HourlyData } from "./types/types";
+import { Header } from "./components/layout/Header";
 
 function App() {
   const [currentData, setCurrentData] = useState<CurrentData | null>(null);
@@ -32,23 +31,8 @@ function App() {
   }, [city, unit]);
 
   return (
-    <main className="flex flex-col gap-4 w-88 m-auto">
-      <section className="flex w-full items-center justify-between p-1">
-        <img
-          className="w-36"
-          src="/assets/images/logo.svg"
-          alt="Logo Weather App"
-        />
-        <UnitButton />
-      </section>
-
-      <h1 className="font-bricolageGrotesque text-Neutral-0 my-4 p-2">
-        How's the sky looking today?
-      </h1>
-
-      <section className="my-2 space-y-2">
-        <SearchInput search={(city) => setCity(city)} />
-      </section>
+    <main className="flex flex-col gap-4 w-88 md:w-full m-auto">
+      <Header setCity={setCity}/>
 
       {currentData && dailyData && hourlyData ? (
         <>

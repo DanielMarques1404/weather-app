@@ -32,8 +32,8 @@ export const SearchInput = ({ search }: SearchInputProps) => {
   };
 
   return (
-    <div className="relative flex flex-col gap-2 items-center justify-center">
-      <div className={cn("flex items-center justify-between gap-2 bg-Neutral-700 border border-Neutral-600 rounded-lg w-full p-4 select-none", {"border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]" : onFocus})}>
+    <div className="relative flex flex-col gap-2 md:flex-row md:flex-1 md:gap-3 items-center justify-center">
+      <div className={cn("flex items-center justify-between gap-2 bg-Neutral-700 hover:bg-Neutral-600 border border-Neutral-600 rounded-lg w-full p-4 select-none", {"border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]" : onFocus})}>
         <img src="/assets/images/icon-search.svg" alt="Search Icon" />
         <input
           className="flex-1 text-Neutral-200 outline-none bg-transparent"
@@ -57,13 +57,13 @@ export const SearchInput = ({ search }: SearchInputProps) => {
       {showList && searchTerm.length > 2 && (
         <>
           {isPending ? (
-            <div className="absolute top-15 z-99 flex items-center justify-center gap-2 w-full bg-Neutral-700 border border-Neutral-600 text-Neutral-0 rounded-lg p-2 h-16">
+            <div className="absolute top-15 z-99 flex items-center justify-center gap-2 w-full md:w-3/4 left-0 bg-Neutral-700 border border-Neutral-600 text-Neutral-0 rounded-lg p-2 h-16">
               <img src="/assets/images/icon-loading.svg" alt="Icon loading search" />
               <span className="text-Neutral-200">Search in progress</span>
             </div>
           ) : (
             data.results && (
-              <div className="absolute top-15 z-99 w-full overflow-y-auto scrollbar-custom bg-Neutral-700 border border-Neutral-600 text-Neutral-0 rounded-lg p-2 h-48">
+              <div className="absolute top-16 z-99 w-full overflow-y-auto scrollbar-custom bg-Neutral-700 md:w-3/4 left-0 border border-Neutral-600 text-Neutral-0 rounded-lg p-2 h-48">
                 <ul className="space-y-2 mr-2">
                   {data.results.map((city: City) => (
                     <li
@@ -82,7 +82,7 @@ export const SearchInput = ({ search }: SearchInputProps) => {
         </>
       )}
       <button
-        className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 rounded-lg w-full p-4 cursor-pointer"
+        className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 rounded-lg w-full p-4 cursor-pointer md:w-1/4"
         onClick={() => chosenCity && search(chosenCity)}
       >
         <span className="flex text-xl text-Neutral-200 font-semibold items-center justify-center w-full">
