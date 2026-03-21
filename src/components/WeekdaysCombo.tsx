@@ -7,7 +7,7 @@ type WeekdayItemProps = {
 };
 
 type WeekdaySelectedProps = {
-    label: string;
+    label?: string;
     onclick: () => void;
 }
 
@@ -28,7 +28,7 @@ export const WeekdaySelected = ({label, onclick}: WeekdaySelectedProps) => {
       className="flex items-center justify-center gap-2 bg-Neutral-600 font-dmSans text-sm text-Neutral-0 p-2 w-full cursor-pointer rounded-xl"
       onClick={onclick}
     >
-      {selected}
+      {selected ? selected : "-"}
       <img src="/assets/images/icon-dropdown.svg" alt="Dropdown button" />
     </div>
   );

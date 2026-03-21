@@ -48,10 +48,23 @@ export class OpenMeteoApi {
     this.params = params;
   }
   // temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch
-  async fetchWeather() {
+  private async fetchWeather() {
     const url = "https://api.open-meteo.com/v1/forecast";
     const responses = await fetchWeatherApi(url, this.params);
     this.data = responses[0];
+  }
+
+  async getWeatherFor(): Promise<{
+    currentData: CurrentData;
+    dailyData: DailyData;
+    hourlyData: HourlyData;
+  }> {
+    await this.fetchWeather();
+    return {
+      currentData: this.getCurrentData(),
+      dailyData: this.getDailyData(),
+      hourlyData: this.getHourlyData(),
+    };
   }
 
   getHourlyData(): HourlyData {

@@ -5,7 +5,7 @@ import { ItemList } from "./ItemList";
 import { WeekdaySelected, WeekdaysList } from "./WeekdaysCombo";
 
 type HourlyForecastProps = {
-  hourly: HourlyData;
+  hourly?: HourlyData;
 };
 
 export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
@@ -14,7 +14,7 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
 
   const handleWeekdayChange = (weekdayIndex: number) => {
     setDay(weekdayIndex);
-    setShowListWeekdays(false)
+    setShowListWeekdays(false);
   };
 
   return (
@@ -26,37 +26,45 @@ export const HourlyForecast = ({ hourly }: HourlyForecastProps) => {
           </span>
           <div className="w-2/5">
             <WeekdaySelected
-              label={hourly.time[day][0].toLocaleString("en-US", {
+              label={hourly?.time[day][0].toLocaleString("en-US", {
                 weekday: "long",
               })}
-              onclick={() => setShowListWeekdays(!showListWeekdays)}
+              onclick={() => hourly && setShowListWeekdays(!showListWeekdays)}
             />
           </div>
         </div>
         <div className="w-full overflow-y-auto scrollbar-custom">
-          <ul className="space-y-2 mr-2">
-            {hourly.time[day].map((item, idx) => (
-              <li key={`hourly-${idx}`}>
-                <ItemList
-                  weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(hourly.weather_code[day][idx])}.webp`}
-                  hour={item.toLocaleString("en-US", {
-                    hour: "numeric",
-                    hour12: true,
-                  })}
-                  temperature={Number(
-                    hourly.temperature_2m[day][idx].toFixed(0),
-                  )}
-                />
-              </li>
-            ))}
-          </ul>
+          {hourly ? (
+            <ul className="space-y-2 mr-2">
+              {hourly?.time[day].map((item, idx) => (
+                <li key={`hourly-${idx}`}>
+                  <ItemList
+                    weatherIcon={`/assets/images/icon-${getOpenMeteoIconName(hourly.weather_code[day][idx])}.webp`}
+                    hour={item.toLocaleString("en-US", {
+                      hour: "numeric",
+                      hour12: true,
+                    })}
+                    temperature={Number(
+                      hourly.temperature_2m[day][idx].toFixed(0),
+                    )}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul className="space-y-2 mr-2">
+              {Array.from({ length: 24 }, (_, idx) => <li key={`hourly-${idx}`} className="w-full h-12 border border-Neutral-600 bg-Neutral-700 rounded-md"></li>)}
+            </ul>
+          )}
         </div>
-        {showListWeekdays && <div className="absolute right-2 top-10">
-          <WeekdaysList
-            indexList={[2, 3, 4, 5, 6, 0, 1]}
-            onclick={handleWeekdayChange}
-          />
-        </div>}
+        {showListWeekdays && (
+          <div className="absolute right-2 top-10">
+            <WeekdaysList
+              indexList={[2, 3, 4, 5, 6, 0, 1]}
+              onclick={handleWeekdayChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import type { Unit } from "../types/types";
 
-export const dateOptions: Intl.DateTimeFormatOptions = { 
-    weekday: 'long',
-    year: 'numeric', 
-    month: 'short',
-    day: 'numeric' 
+export const dateOptions: Intl.DateTimeFormatOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "short",
+  day: "numeric",
 };
 
 export function getOpenMeteoIconName(code: number): string {
@@ -57,16 +57,33 @@ export const openMeteoIconByCode: Record<number, string> = {
   99: "storm",
 };
 
+import type { City, CurrentData, DailyData, HourlyData } from "../types/types";
+import { OpenMeteoApi } from "./open-meteo-api";
+
+export type WeatherResult = {
+  currentData: CurrentData;
+  dailyData: DailyData;
+  hourlyData: HourlyData;
+};
+
+export async function getWeatherFor(
+  city: City,
+  unit: Unit,
+): Promise<WeatherResult> {
+  const api = new OpenMeteoApi(city.latitude, city.longitude, unit);
+  return api.getWeatherFor();
+}
+
 export const ImperialUnit: Unit = {
   temperature: "Fahrenheit (ºF)",
   windSpeed: "mph",
   precipitation: "Inches (in)",
-  precipitation_short: "in"
+  precipitation_short: "in",
 };
 
 export const MetricsUnit: Unit = {
   temperature: "Celsius (ºC)",
   windSpeed: "km/h",
   precipitation: "Millimeters (mm)",
-  precipitation_short: "mm"
+  precipitation_short: "mm",
 };
