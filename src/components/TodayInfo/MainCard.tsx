@@ -17,16 +17,16 @@ export const MainCard = (props: MainCardProps) => {
     );
 
   return (
-    <div className="flex flex-col md:flex-row gap-2 items-center justify-center font-dmSans rounded-2xl overflow-hidden p-4 bg-[url('/assets/images/bg-today-small.svg')] md:bg-[url('/assets/images/bg-today-large.svg')] bg-cover bg-center">
+    <div className="flex flex-col h-76 md:flex-row gap-2 items-center justify-center font-dmSans rounded-2xl overflow-hidden p-4 bg-[url('/assets/images/bg-today-small.svg')] md:bg-[url('/assets/images/bg-today-large.svg')] bg-cover bg-center mb-2">
       <div className="flex flex-col gap-2">
-        <span className="text-4xl font-semibold text-Neutral-200">
+        <span className="text-3xl font-semibold text-Neutral-0">
           {`${props.city!.name}, ${props.city!.country}`}
         </span>
-        <span className="text-xl text-Neutral-300">
+        <span className="text-xl text-Neutral-200">
           {props.data!.date?.toLocaleDateString("en-us", dateOptions)}
         </span>
       </div>
-      <div className="flex gap-8 w-full items-center justify-center">
+      <div className="flex gap-12 w-full items-center justify-center">
         <img
           className="w-28 h-28"
           src={`/assets/images/icon-${getOpenMeteoIconName(props.data!.weather_code)}.webp`}

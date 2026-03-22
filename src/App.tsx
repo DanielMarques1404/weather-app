@@ -29,7 +29,7 @@ function App() {
   });
 
   return (
-    <main className="flex flex-col gap-4 w-88 md:w-full m-auto">
+    <main className="flex flex-col gap-4 w-92 md:w-full m-auto">
       <Header setCity={setCity} />
       {/* <DailyForecast city={city} /> */}
       {city && (

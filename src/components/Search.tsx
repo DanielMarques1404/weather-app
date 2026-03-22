@@ -33,7 +33,7 @@ export const SearchInput = ({ search }: SearchInputProps) => {
 
   return (
     <div className="relative flex flex-col gap-2 md:flex-row md:flex-1 md:gap-3 items-center justify-center">
-      <div className={cn("flex items-center justify-between gap-2 bg-Neutral-700 hover:bg-Neutral-600 border border-Neutral-600 rounded-lg w-full p-4 select-none", {"border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]" : onFocus})}>
+      <div className={cn("flex items-center justify-between gap-3 bg-Neutral-700 hover:bg-Neutral-600 border border-Neutral-600 rounded-lg w-full p-4 select-none", {"border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]" : onFocus})}>
         <img src="/assets/images/icon-search.svg" alt="Search Icon" />
         <input
           className="flex-1 text-Neutral-200 outline-none bg-transparent"
@@ -82,10 +82,10 @@ export const SearchInput = ({ search }: SearchInputProps) => {
         </>
       )}
       <button
-        className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 rounded-lg w-full p-4 cursor-pointer md:w-1/4"
+        className="flex items-center justify-between gap-2 bg-Blue-500 hover:bg-Blue-700 rounded-xl w-full p-4 cursor-pointer md:w-1/4"
         onClick={() => chosenCity && search(chosenCity)}
       >
-        <span className="flex text-xl text-Neutral-200 font-semibold items-center justify-center w-full">
+        <span className="flex text-2xl text-Neutral-0 font-dmSans items-center justify-center w-full">
           Search
         </span>
       </button>
