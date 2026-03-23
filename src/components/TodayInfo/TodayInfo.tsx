@@ -19,7 +19,7 @@ export const TodayInfo = ({ data, city, isLoading }: TodayInfoProps) => {
         />
       </section>
 
-      <section className="grid grid-cols-2 grid-rows-2 gap-4">
+      <section className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <SimpleCard
           label={"Feels like"}
           info={data?.apparent_temperature}

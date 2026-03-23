@@ -29,21 +29,39 @@ function App() {
   });
 
   return (
-    <main className="flex flex-col gap-4 w-92 md:w-full m-auto">
-      <Header setCity={setCity} />
-      {/* <DailyForecast city={city} /> */}
-      {city && (
-        <>
-          <TodayInfo
-            data={data?.currentData}
-            city={city}
-            isLoading={isLoading}
-          />
-          <DailyForecastInfo data={data?.dailyData} isLoading={isLoading} />
-          <HourlyForecastInfo data={data?.hourlyData} isLoading={isLoading} />
-        </>
-      )}
-    </main>
+    <div className="flex flex-col gap-4 w-92 px-2 md:w-full md:px-6 m-auto">
+      <header>
+        <Header setCity={setCity} />
+      </header>
+      <main>
+        {/* <DailyForecast city={city} /> */}
+        {city && (
+          <div className="flex flex-col gap-4 md:flex-row">
+            <section className="flex flex-col gap-4 md:flex-1 md:w-full">
+              <div className="w-full">
+                <TodayInfo
+                  data={data?.currentData}
+                  city={city}
+                  isLoading={isLoading}
+                />
+              </div>
+              <div className="w-full">
+                <DailyForecastInfo
+                  data={data?.dailyData}
+                  isLoading={isLoading}
+                />
+              </div>
+            </section>
+            <section className="w-full md:w-1/3 md:h-auto">
+              <HourlyForecastInfo
+                data={data?.hourlyData}
+                isLoading={isLoading}
+              />
+            </section>
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
 

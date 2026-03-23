@@ -22,7 +22,7 @@ export const Header = ({ setCity }: HeaderProps) => {
         How's the sky looking today?
       </h1>
 
-      <section className="my-2 space-y-2">
+      <section className="my-2 space-y-2 w-full md:w-1/2 md:mx-auto">
         <SearchInput search={(city) => setCity(city)} />
       </section>
     </section>

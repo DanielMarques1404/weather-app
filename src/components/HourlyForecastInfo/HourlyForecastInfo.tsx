@@ -22,7 +22,7 @@ export const HourlyForecastInfo = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 items-center justify-around rounded-xl border border-Neutral-600 bg-Neutral-800 p-2 w-full h-96">
+    <div className="flex flex-col gap-2 items-center justify-around rounded-xl border border-Neutral-600 bg-Neutral-800 p-2 w-full h-96 md:h-158">
       <div className="relative flex flex-col items-center justify-between px-2 w-full overflow-hidden">
         <div className="flex items-center justify-between mb-4 w-full">
           <span className="font-dmSans text-md text-start font-bold text-Neutral-0 w-3/5">
