@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDebounce } from "use-debounce";
-import { axios } from "../libs/axios";
-import type { City } from "../types/types";
-import { cn } from "../libs/cn";
+import { axios } from "../../libs/axios";
+import { cn } from "../../libs/cn";
+import type { City } from "../../types/types";
 
 type SearchInputProps = {
   search: (city: City) => void;
@@ -33,7 +33,12 @@ export const SearchInput = ({ search }: SearchInputProps) => {
 
   return (
     <div className="relative flex flex-col gap-2 md:flex-row md:flex-1 md:gap-3 items-center justify-center">
-      <div className={cn("flex items-center justify-between gap-3 bg-Neutral-700 hover:bg-Neutral-600 border border-Neutral-600 rounded-lg w-full p-4 select-none", {"border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]" : onFocus})}>
+      <div
+        className={cn(
+          "flex items-center justify-between gap-3 bg-Neutral-700 hover:bg-Neutral-600 border border-Neutral-600 rounded-lg w-full p-4 select-none",
+          { "border-2 border-Neutral-0 px-[.95rem] py-[0.95rem]": onFocus },
+        )}
+      >
         <img src="/assets/images/icon-search.svg" alt="Search Icon" />
         <input
           className="flex-1 text-Neutral-200 outline-none bg-transparent"
@@ -42,13 +47,13 @@ export const SearchInput = ({ search }: SearchInputProps) => {
           placeholder="Search for a place..."
           onChange={(e) => setSearchTerm(e.target.value)}
           onFocus={() => {
-            setShowList(true)
-            setOnFocus(true)
+            setShowList(true);
+            setOnFocus(true);
           }}
           onBlur={(e) => {
             if (!e.currentTarget.contains(e.relatedTarget)) {
               setShowList(false);
-              setOnFocus(false)
+              setOnFocus(false);
             }
           }}
         />
@@ -58,7 +63,10 @@ export const SearchInput = ({ search }: SearchInputProps) => {
         <>
           {isPending ? (
             <div className="absolute top-15 z-99 flex items-center justify-center gap-2 w-full md:w-3/4 left-0 bg-Neutral-700 border border-Neutral-600 text-Neutral-0 rounded-lg p-2 h-16">
-              <img src="/assets/images/icon-loading.svg" alt="Icon loading search" />
+              <img
+                src="/assets/images/icon-loading.svg"
+                alt="Icon loading search"
+              />
               <span className="text-Neutral-200">Search in progress</span>
             </div>
           ) : (
