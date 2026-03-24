@@ -10,14 +10,14 @@ type MainCardProps = {
 export const MainCard = (props: MainCardProps) => {
   if (props.isLoading)
     return (
-      <div className="flex flex-col items-center justify-center text-Neutral-0 w-full h-full bg-Neutral-700 rounded-2xl border border-Neutral-600">
+      <div className="flex flex-col items-center justify-center text-Neutral-0 w-full h-76 bg-Neutral-700 rounded-2xl border border-Neutral-600">
         <img src="/assets/images/icon-loading.svg" className="w-12 h-12" />
         <span>Loading...</span>
       </div>
     );
 
   return (
-    <div className="flex flex-col h-76 md:flex-row gap-2 items-center justify-center font-dmSans rounded-2xl overflow-hidden p-4 bg-[url('/assets/images/bg-today-small.svg')] md:bg-[url('/assets/images/bg-today-large.svg')] bg-cover bg-center mb-2">
+    <div className="flex flex-col h-76 md:flex-row gap-2 items-center justify-center md:justify-between font-dmSans rounded-2xl overflow-hidden p-4 bg-[url('/assets/images/bg-today-small.svg')] md:bg-[url('/assets/images/bg-today-large.svg')] bg-cover bg-center mb-2">
       <div className="flex flex-col gap-2">
         <span className="text-3xl font-semibold text-Neutral-0">
           {`${props.city!.name}, ${props.city!.country}`}
@@ -26,7 +26,7 @@ export const MainCard = (props: MainCardProps) => {
           {props.data!.date?.toLocaleDateString("en-us", dateOptions)}
         </span>
       </div>
-      <div className="flex gap-12 w-full items-center justify-center">
+      <div className="flex gap-8 md:gap-2 items-center justify-center">
         <img
           className="w-28 h-28"
           src={`/assets/images/icon-${getOpenMeteoIconName(props.data!.weather_code)}.webp`}

@@ -3,11 +3,11 @@ import { useState } from "react";
 import "./App.css";
 import { useUnitContext } from "./app/hooks/useUnitContext";
 import { DailyForecastInfo } from "./components/DailyForecastInfo/DailyForecastInfo";
-import { ErrorApi } from "./components/ErrorApi";
 import { HourlyForecastInfo } from "./components/HourlyForecastInfo/HourlyForecastInfo";
 import { Header } from "./components/Search/Header";
 import { Search } from "./components/Search/Search";
 import { TodayInfo } from "./components/TodayInfo/TodayInfo";
+import { ErrorApi } from "./components/Utils/ErrorApi";
 import { type WeatherResult, getWeatherFor } from "./libs/utils";
 import type { City } from "./types/types";
 

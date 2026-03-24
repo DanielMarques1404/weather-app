@@ -1,5 +1,4 @@
-import { UnitButton } from "../Config";
-
+import { UnitButton } from "../Utils/Config";
 
 export const Header = () => {
   return (

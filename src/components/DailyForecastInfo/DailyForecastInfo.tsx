@@ -12,11 +12,16 @@ export const DailyForecastInfo = ({
 }: DailyForecastInfoProps) => {
   if (isLoading)
     return (
-      <ul className="grid grid-cols-3 gap-3">
-        {[0, 1, 2, 3, 4, 5, 6].map((_, idx) => (
-          <SimpleCard weekday={""} data={undefined} index={idx} isLoading />
-        ))}
-      </ul>
+      <div className="flex flex-col gap-2">
+        <span className="font-dmSans text-md text-start font-bold text-Neutral-0">
+          Daily forecast
+        </span>
+        <ul className="grid grid-cols-7 gap-3">
+          {[0, 1, 2, 3, 4, 5, 6].map((_, idx) => (
+            <SimpleCard weekday={""} data={undefined} index={idx} isLoading />
+          ))}
+        </ul>
+      </div>
     );
 
   return (
