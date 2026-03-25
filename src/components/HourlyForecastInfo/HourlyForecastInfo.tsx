@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { HourlyData } from "../../types/types";
 import { HourList } from "./HourList";
-import { WeekdaysList } from "./WeekdaysList";
 import { WeekdaySelect } from "./WeekdaySelect";
+import { WeekdaysList } from "./WeekdaysList";
 
 type HourlyForecastInfoProps = {
   data: HourlyData | undefined;
@@ -15,6 +15,17 @@ export const HourlyForecastInfo = ({
 }: HourlyForecastInfoProps) => {
   const [day, setDay] = useState(0);
   const [showListWeekdays, setShowListWeekdays] = useState(false);
+
+  const moveZeroToIndex = (targetIndex?: number): number[] => {
+    const arr = [1, 2, 3, 4, 5, 6, 0];
+
+    if (targetIndex === undefined) return arr;
+
+    const mondayBasedIndex = (targetIndex + 6) % 7;
+    const shift = (mondayBasedIndex - 6 + arr.length) % arr.length;
+
+    return [...arr.slice(-shift), ...arr.slice(0, -shift)];
+  };
 
   const handleWeekdayChange = (weekdayIndex: number) => {
     setDay(weekdayIndex);
@@ -46,7 +57,7 @@ export const HourlyForecastInfo = ({
         {showListWeekdays && (
           <div className="absolute right-2 top-10">
             <WeekdaysList
-              indexList={[1, 2, 3, 4, 5, 6, 0]}
+              indexList={moveZeroToIndex(data?.time[0][0].getDay())}
               onclick={handleWeekdayChange}
             />
           </div>

@@ -18,7 +18,9 @@ export const DailyForecastInfo = ({
         </span>
         <ul className="grid grid-cols-7 gap-3">
           {[0, 1, 2, 3, 4, 5, 6].map((_, idx) => (
-            <SimpleCard weekday={""} data={undefined} index={idx} isLoading />
+            <li key={`loading-daily-card-${idx}`}>
+              <SimpleCard weekday={""} data={undefined} index={idx} isLoading />
+            </li>
           ))}
         </ul>
       </div>
